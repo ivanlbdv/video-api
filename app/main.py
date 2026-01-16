@@ -14,7 +14,7 @@ async def lifespan(app: FastAPI):
     database.Base.metadata.create_all(bind=database.engine)
     yield
 
-setattr(app, 'lifespan', lifespan)
+app = FastAPI(lifespan=lifespan)
 
 
 def get_db():

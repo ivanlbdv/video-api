@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+import isodate
 from pydantic import BaseModel, field_validator
 
 
@@ -21,10 +22,21 @@ class VideoCreate(VideoBase):
 
     @field_validator('duration')
     @classmethod
-    def duration_positive(cls, v: timedelta) -> timedelta:
-        if v <= timedelta(0):
-            raise ValueError('duration must be positive')
-        return v
+    def duration_positive(cls, v: str | timedelta) -> timedelta:
+        if isinstance(v, timedelta):
+            if v <= timedelta(0):
+                raise ValueError('duration must be positive')
+            return v
+
+        try:
+            td = isodate.parse_duration(v)
+            if td <= timedelta(0):
+                raise ValueError('duration must be positive')
+            return td
+        except isodate.ISO8601Error:
+            raise ValueError(
+                'Invalid ISO 8601 duration format (e.g., "PT1H", "PT30M")'
+            )
 
     @field_validator('camera_number')
     @classmethod
