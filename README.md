@@ -120,7 +120,7 @@ curl "http://localhost:8000/videos/1"
 - Обновление статуса видео
 
 ```bash
--X PATCH "http://localhost:8000/videos/1/status" \
+curl -X PATCH "http://localhost:8000/videos/1/status" \
  -H "Content-Type: application/json" \
  -d '{"status": "transcoded"}'
 ```
