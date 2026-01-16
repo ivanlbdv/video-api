@@ -125,8 +125,6 @@ curl "http://localhost:8000/videos/1"
  -d '{"status": "transcoded"}'
 ```
 
-Проект будет доступен по адресу: http://127.0.0.1:8000/
-
 ## Автор:
 Иван Лебедев
 https://github.com/ivanlbdv
